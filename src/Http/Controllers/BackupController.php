@@ -1,8 +1,8 @@
 <?php namespace WebEd\Plugins\Backup\Http\Controllers;
 
 use WebEd\Base\Core\Http\Controllers\BaseAdminController;
-use WebEd\Base\Core\Support\DataTable\DataTables;
 use Storage;
+use WebEd\Plugins\Backup\Http\DataTables\BackupsListDataTable;
 
 class BackupController extends BaseAdminController
 {
@@ -15,66 +15,18 @@ class BackupController extends BaseAdminController
         $this->getDashboardMenu($this->module);
     }
 
-    public function getIndex()
+    public function getIndex(BackupsListDataTable $backupsListDataTable)
     {
-        $this->assets->addJavascripts('jquery-datatables');
-
         $this->setPageTitle('Backups');
 
-        $this->dis['dataTableColumns'] = [
-            'headings' => [
-                ['name' => 'Type', 'width' => '20%'],
-                ['name' => 'Backup size', 'width' => '20%'],
-                ['name' => 'Created at', 'width' => '20%'],
-                ['name' => 'Actions', 'width' => '20%'],
-            ],
-        ];
-
-        $this->dis['dataTableHeadings'] = json_encode([
-            ['data' => 'type', 'name' => 'type'],
-            ['data' => 'file_size', 'name' => 'file_size'],
-            ['data' => 'created_at', 'name' => 'created_at', 'searchable' => false],
-            ['data' => 'actions', 'name' => 'actions', 'searchable' => false, 'orderable' => false],
-        ]);
+        $this->dis['dataTable'] = $backupsListDataTable->run();
 
         return do_filter('webed-backup.index.get', $this)->viewAdmin('index');
     }
 
-    public function postListing(DataTables $dataTables)
+    public function postListing(BackupsListDataTable $backupsListDataTable)
     {
-        $data = $dataTables
-            ->of(collect(\Backup::all()))
-            ->addColumn('type', function ($item) {
-                $fileName = array_get($item, 'file_name');
-                $type = explode('-', $fileName);
-                return $type[0];
-            })
-            ->addColumn('file_size', function ($item) {
-                return format_file_size(array_get($item, 'file_size', 0), 2);
-            })
-            ->addColumn('created_at', function ($item) {
-                return convert_unix_time_format(array_get($item, 'last_modified'));
-            })
-            ->addColumn('actions', function ($item) {
-                $download = html()->link(route('admin::webed-backup.download.get', [
-                    'path' => array_get($item, 'file_path')
-                ]), 'Download', [
-                    'class' => 'btn btn-outline green btn-sm ajax-link',
-                ]);
-                $deleteBtn = form()->button('Delete', [
-                    'title' => 'Delete this item',
-                    'data-ajax' => route('admin::webed-backup.delete.delete', [
-                        'path' => array_get($item, 'file_path')
-                    ]),
-                    'data-method' => 'DELETE',
-                    'data-toggle' => 'confirmation',
-                    'class' => 'btn btn-outline red-sunglo btn-sm ajax-link',
-                ]);
-
-                return $download . $deleteBtn;
-            });
-        return do_filter('datatables.custom-fields.index.post', $data, $this)
-            ->make(true);
+        return do_filter('datatables.custom-fields.index.post', $backupsListDataTable, $this);
     }
 
     /**
