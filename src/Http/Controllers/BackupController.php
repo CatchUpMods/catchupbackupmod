@@ -71,14 +71,14 @@ class BackupController extends BaseAdminController
     {
         $path = $this->request->get('path');
         if (!$path) {
-            return response_with_messages('Wrong path name', true, ERROR_CODE);
+            return response_with_messages('Wrong path name', true, \Constants::ERROR_CODE);
         }
 
         $result = \Backup::delete($path);
         if ($result) {
-            return response_with_messages('Deleted', false, SUCCESS_NO_CONTENT_CODE);
+            return response_with_messages('Deleted', false, \Constants::SUCCESS_NO_CONTENT_CODE);
         }
-        return response_with_messages('Cannot delete...', true, ERROR_CODE);
+        return response_with_messages('Cannot delete...', true, \Constants::ERROR_CODE);
     }
 
     public function getDeleteAll()
