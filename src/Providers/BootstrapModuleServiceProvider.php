@@ -35,13 +35,14 @@ class BootstrapModuleServiceProvider extends ServiceProvider
          */
         \DashboardMenu::registerItem([
             'id' => 'webed-backup',
-            'piority' => 999,
+            'priority' => 999,
             'parent_id' => 'webed-configuration',
             'heading' => null,
             'title' => 'Backup',
             'font_icon' => 'fa fa-circle-o',
             'link' => route('admin::webed-backup.index.get'),
             'css_class' => null,
+            'permissions' => ['view-backups'],
         ]);
     }
 }

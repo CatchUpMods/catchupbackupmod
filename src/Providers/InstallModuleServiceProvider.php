@@ -1,8 +1,6 @@
 <?php namespace WebEd\Plugins\Backup\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Schema;
-use Illuminate\Database\Schema\Blueprint;
 
 class InstallModuleServiceProvider extends ServiceProvider
 {
@@ -34,17 +32,10 @@ class InstallModuleServiceProvider extends ServiceProvider
 
     private function booted()
     {
-        $this->createSchema();
-        //acl_permission()
-        //->registerPermission('Permission 1 description', 'description-1', $this->module)
-        //->registerPermission('Permission 2 description', 'description-2', $this->module);
-    }
-
-    private function createSchema()
-    {
-        //Schema::create('field_groups', function (Blueprint $table) {
-        //    $table->engine = 'InnoDB';
-        //    $table->increments('id');
-        //});
+        acl_permission()
+            ->registerPermission('View backups', 'view-backups', $this->module)
+            ->registerPermission('Download backups', 'download-backups', $this->module)
+            ->registerPermission('Create backups', 'create-backups', $this->module)
+            ->registerPermission('Delete backups', 'delete-backups', $this->module);
     }
 }
