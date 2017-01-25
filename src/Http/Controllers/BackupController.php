@@ -36,7 +36,7 @@ class BackupController extends BaseAdminController
     public function getCreate($type = null)
     {
         try {
-            ini_set('max_execution_time', 3000);
+            ini_set('max_execution_time', 30000);
 
             \Backup::createBackupFolder('webed-backup');
 
@@ -47,7 +47,7 @@ class BackupController extends BaseAdminController
                 \Backup::backupFolder(public_path('uploads'));
             }
 
-            $this->flashMessagesHelper->addMessages('Completed', 'success');
+            $this->flashMessagesHelper->addMessages('Create backup successfully', 'success');
         } catch (\Exception $exception) {
             $this->flashMessagesHelper->addMessages($exception->getMessage(), 'danger');
         }
