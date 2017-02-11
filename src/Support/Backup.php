@@ -4,6 +4,11 @@ use Illuminate\Filesystem\Filesystem;
 use PclZip as Zip;
 use Carbon\Carbon;
 
+/**
+ * @package WebEd\Plugins\Backup\Support
+ * @author Sang Nguyen <sangnguyenplus@gmail.com>
+ * @modified Tedozi Manson <github/duyphan2502>
+ */
 class Backup
 {
     /**
@@ -133,7 +138,6 @@ class Backup
     /**
      * @param $folder
      * @return mixed
-     * @author Sang Nguyen <sangnguyenplus@gmail.com>
      */
     public function createFolder($folder)
     {
@@ -146,7 +150,6 @@ class Backup
 
     /**
      * @return bool
-     * @author Sang Nguyen <sangnguyenplus@gmail.com>
      */
     public function backupDb()
     {
@@ -171,7 +174,6 @@ class Backup
     /**
      * @param $source
      * @return bool
-     * @author Sang Nguyen <sangnguyenplus@gmail.com>
      */
     public function backupFolder($source)
     {
@@ -203,7 +205,6 @@ class Backup
      * @param $path
      * @param $file
      * @return bool
-     * @author Sang Nguyen <sangnguyenplus@gmail.com>
      */
     public function restoreDb($file, $path)
     {
@@ -227,7 +228,6 @@ class Backup
      * @param $fileName
      * @param $pathTo
      * @return bool
-     * @author Sang Nguyen <sangnguyenplus@gmail.com>
      */
     public function restore($fileName, $pathTo)
     {
@@ -251,7 +251,6 @@ class Backup
      * @param $src
      * @param $zip
      * @param $pathLength
-     * @author Sang Nguyen <sangnguyenplus@gmail.com>
      */
     public function recurseZip($src, &$zip, $pathLength)
     {
@@ -271,7 +270,6 @@ class Backup
     /**
      * @param $path
      * @param $name
-     * @author Sang Nguyen <sangnguyenplus@gmail.com>
      */
     public function compressDbToZip($path, $name)
     {
