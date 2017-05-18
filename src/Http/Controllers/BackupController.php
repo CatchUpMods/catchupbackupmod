@@ -1,6 +1,6 @@
 <?php namespace WebEd\Plugins\Backup\Http\Controllers;
 
-use WebEd\Base\Core\Http\Controllers\BaseAdminController;
+use WebEd\Base\Http\Controllers\BaseAdminController;
 use Storage;
 use WebEd\Plugins\Backup\Http\DataTables\BackupsListDataTable;
 
@@ -47,11 +47,11 @@ class BackupController extends BaseAdminController
                 \Backup::backupFolder(public_path('uploads'));
             }
 
-            $this->flashMessagesHelper->addMessages('Create backup successfully', 'success');
+            flash_messages()->addMessages('Create backup successfully', 'success');
         } catch (\Exception $exception) {
-            $this->flashMessagesHelper->addMessages($exception->getMessage(), 'danger');
+            flash_messages()->addMessages($exception->getMessage(), 'danger');
         }
-        $this->flashMessagesHelper->showMessagesOnSession();
+        flash_messages()->showMessagesOnSession();
         return redirect()->to(route('admin::webed-backup.index.get'));
     }
 
@@ -62,7 +62,7 @@ class BackupController extends BaseAdminController
         if ($result !== null) {
             return $result;
         }
-        $this->flashMessagesHelper->addMessages('Cannot download...', 'danger')
+        flash_messages()->addMessages('Cannot download...', 'danger')
             ->showMessagesOnSession();
         return redirect()->to(route('admin::webed-backup.index.get'));
     }
@@ -85,11 +85,11 @@ class BackupController extends BaseAdminController
     {
         $result = \Backup::delete();
         if ($result) {
-            $this->flashMessagesHelper->addMessages('Deleted', 'success');
+            flash_messages()->addMessages('Deleted', 'success');
         } else {
-            $this->flashMessagesHelper->addMessages('Error occurred', 'danger');
+            flash_messages()->addMessages('Error occurred', 'danger');
         }
-        $this->flashMessagesHelper->showMessagesOnSession();
+        flash_messages()->showMessagesOnSession();
         return redirect()->to(route('admin::webed-backup.index.get'));
     }
 }

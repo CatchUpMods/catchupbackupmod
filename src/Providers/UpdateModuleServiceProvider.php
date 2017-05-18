@@ -2,14 +2,14 @@
 
 use Illuminate\Support\ServiceProvider;
 
-class UninstallModuleServiceProvider extends ServiceProvider
+class UpdateModuleServiceProvider extends ServiceProvider
 {
     protected $module = 'WebEd\Plugins\Backup';
 
     protected $moduleAlias = 'webed-backup';
 
     /**
-     * Bootstrap the application services.
+     * Bootstrap any application services.
      *
      * @return void
      */
@@ -21,25 +21,19 @@ class UninstallModuleServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the application services.
+     * Register any application services.
      *
      * @return void
      */
     public function register()
     {
-
+        register_module_update_batches($this->moduleAlias, [
+            //'2.1.4' => __DIR__ . '/../../update-batches/2.1.4.php',
+        ], 'plugins');
     }
 
     protected function booted()
     {
-        acl_permission()
-        ->unsetPermissionByModule($this->moduleAlias);
-
-        $this->dropSchema();
-    }
-
-    protected function dropSchema()
-    {
-        //\Schema::dropIfExists('table-name');
+        load_module_update_batches($this->moduleAlias, 'plugins');
     }
 }

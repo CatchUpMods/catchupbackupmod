@@ -1,6 +1,8 @@
 <?php namespace WebEd\Plugins\Backup\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Schema;
+use Illuminate\Database\Schema\Blueprint;
 
 class InstallModuleServiceProvider extends ServiceProvider
 {
@@ -30,7 +32,7 @@ class InstallModuleServiceProvider extends ServiceProvider
 
     }
 
-    private function booted()
+    protected function booted()
     {
         acl_permission()
             ->registerPermission('View backups', 'view-backups', $this->module)
