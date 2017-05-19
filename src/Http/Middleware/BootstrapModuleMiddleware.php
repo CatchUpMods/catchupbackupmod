@@ -23,10 +23,10 @@ class BootstrapModuleMiddleware
          */
         dashboard_menu()->registerItem([
             'id' => 'webed-backup',
-            'priority' => 999,
+            'priority' => 100,
             'parent_id' => 'webed-configuration',
             'heading' => null,
-            'title' => 'Backup',
+            'title' => trans('webed-backup::base.menu_title'),
             'font_icon' => 'fa fa-circle-o',
             'link' => route('admin::webed-backup.index.get'),
             'css_class' => null,

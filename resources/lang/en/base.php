@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'menu_title' => 'Backup',
+
     'type' => 'Type',
     'backup_size' => 'Backup size',
     'backups' => 'Backups',

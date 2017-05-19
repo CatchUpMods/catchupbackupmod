@@ -12,12 +12,20 @@ class BackupController extends BaseAdminController
     {
         parent::__construct();
 
+        $this->middleware(function ($request, $next) {
+            $this->breadcrumbs->addLink(trans('webed-backup::base.backups'), route('admin::webed-backup.index.get'));
+
+            return $next($request);
+        });
+
         $this->getDashboardMenu($this->module);
     }
 
     public function getIndex(BackupsListDataTable $backupsListDataTable)
     {
-        $this->setPageTitle('Backups');
+        $this->getDashboardMenu($this->module);
+
+        $this->setPageTitle(trans('webed-backup::base.backups'));
 
         $this->dis['dataTable'] = $backupsListDataTable->run();
 

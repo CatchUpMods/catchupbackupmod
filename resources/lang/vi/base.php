@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'menu_title' => 'Sao lưu',
+
     'type' => 'Loại',
     'backup_size' => 'Dung lượng',
     'backups' => 'Sao lưu',
