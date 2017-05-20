@@ -35,9 +35,9 @@ class InstallModuleServiceProvider extends ServiceProvider
     protected function booted()
     {
         acl_permission()
-            ->registerPermission('View backups', 'view-backups', $this->module)
-            ->registerPermission('Download backups', 'download-backups', $this->module)
-            ->registerPermission('Create backups', 'create-backups', $this->module)
-            ->registerPermission('Delete backups', 'delete-backups', $this->module);
+            ->registerPermission('View backups', 'view-backups', $this->moduleAlias)
+            ->registerPermission('Download backups', 'download-backups', $this->moduleAlias)
+            ->registerPermission('Create backups', 'create-backups', $this->moduleAlias)
+            ->registerPermission('Delete backups', 'delete-backups', $this->moduleAlias);
     }
 }
